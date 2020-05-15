@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import dateFormat from 'dateformat';
 
 const NewItemButton = ({addRow}) => {
     return (
@@ -6,12 +9,20 @@ const NewItemButton = ({addRow}) => {
     )
 }
 
+const NewDate = ({addCol}) => {
+    const [date, setDate] = useState(new Date());
 
-const NewDateButton = ({addCol}) => {
-    
+    const handleSubmit = () => {
+        var formatted = dateFormat(date, "shortDate");
+        addCol(formatted);
+    }
+
     return (
-        <button onClick={addCol}>New Date</button>
+        <div>
+            <DatePicker selected={date} onChange={date => setDate(date)} />
+            <button onClick={handleSubmit}>Add Date</button>
+        </div>        
     )
 }
 
-export { NewItemButton, NewDateButton };
+export { NewItemButton, NewDate };
